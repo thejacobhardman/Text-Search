@@ -31,11 +31,13 @@ def search_for_text():
         for line in file_to_read:
             letter_num = 0
             for letter in line:
-                print(str(line_num) + "." + str(letter_num))
-                if letter in search_entry.get():
-                    file_contents.tag_add("match", (str(line_num) + "." + str(letter_num)))
-                    file_contents.tag_config("match", background="yellow")
-                    print("FOUND")
+                if len(search_entry.get()) > 1:
+                    print("need to fix...")
+                else:
+                    if letter.upper() in search_entry.get().upper():
+                        file_contents.tag_add("match", (str(line_num) + "." + str(letter_num)))
+                        file_contents.tag_config("match", background="yellow")
+                        print("FOUND")
                 letter_num += 1
             line_num += 1
 
