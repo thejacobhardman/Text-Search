@@ -25,7 +25,8 @@ def open_file_dialog():
         file_contents.insert("1.0", path.read())
 
 def search_for_text():
-    print("Searching...")
+    global num_of_matches
+    num_of_matches = 0
     file_contents.tag_delete("match")
     with open(file_entry.get(), "rt") as file_to_read:
         line_num = 1
@@ -35,17 +36,19 @@ def search_for_text():
                 if len(search_entry.get()) > 1:
                     print("need to fix...")
                 else:
-                    print(match_case.get())
                     if match_case.get() == 0:
                         if letter.upper() in search_entry.get().upper():
                             file_contents.tag_add("match", (str(line_num) + "." + str(letter_num)))
                             file_contents.tag_config("match", background="yellow")
+                            num_of_matches += 1
                     else:
                         if letter in search_entry.get():
                             file_contents.tag_add("match", (str(line_num) + "." + str(letter_num)))
                             file_contents.tag_config("match", background="yellow")
+                            num_of_matches += 1
                 letter_num += 1
             line_num += 1
+        matches_found_label.config(text=("Matches found: " + str(num_of_matches)))
 
 # Create main window
 window = tk.Tk()
