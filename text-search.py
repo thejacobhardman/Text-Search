@@ -5,6 +5,7 @@
 
 import tkinter as tk
 from tkinter import filedialog
+from tkinter import *
 import sys, ctypes
 
 # This code fixes the blurry text that tkinter has when being used on Windows. I got this solution from Stack Overflow:
@@ -34,16 +35,23 @@ def search_for_text():
                 if len(search_entry.get()) > 1:
                     print("need to fix...")
                 else:
-                    if letter.upper() in search_entry.get().upper():
-                        file_contents.tag_add("match", (str(line_num) + "." + str(letter_num)))
-                        file_contents.tag_config("match", background="yellow")
-                        print("FOUND")
+                    print(match_case.get())
+                    if match_case.get() == 0:
+                        if letter.upper() in search_entry.get().upper():
+                            file_contents.tag_add("match", (str(line_num) + "." + str(letter_num)))
+                            file_contents.tag_config("match", background="yellow")
+                    else:
+                        if letter in search_entry.get():
+                            file_contents.tag_add("match", (str(line_num) + "." + str(letter_num)))
+                            file_contents.tag_config("match", background="yellow")
                 letter_num += 1
             line_num += 1
 
 # Create main window
 window = tk.Tk()
 window.title("Text Search")
+
+match_case = IntVar()
 
 # Master frame to hold two sub frames
 content = tk.Frame(window, height="600", width="800")
@@ -76,7 +84,7 @@ search_button.pack(pady="20")
 search_entry = tk.Entry(options_frame, width="20")
 search_entry.pack()
 
-match_case_checkbox = tk.Checkbutton(options_frame, text="Match Case?")
+match_case_checkbox = tk.Checkbutton(options_frame, text="Match Case?", variable=match_case)
 match_case_checkbox.pack()
 
 # Extra label to help make the UI clearer
