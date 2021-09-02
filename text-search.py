@@ -6,6 +6,7 @@
 import tkinter as tk
 from tkinter import filedialog
 import sys, ctypes
+from tkinter import font
 
 # This code fixes the blurry text that tkinter has when being used on Windows. I got this solution from Stack Overflow:
 # https://stackoverflow.com/questions/36514158/tkinter-output-blurry-for-icon-and-text-python-2-7/43033405
@@ -15,10 +16,11 @@ if __name__ == "__main__":
 
 def open_file_dialog():
     path = filedialog.askopenfile(initialdir="/documents", title="Select File", filetypes=(("txt files", "*.txt"),("all files", "*.*")))
-    file_entry.delete(0, "end")
-    file_entry.insert(0, path.name.format())
-    file_contents.delete("1.0", "end")
-    file_contents.insert("1.0", path.read())
+    if path:
+        file_entry.delete(0, "end")
+        file_entry.insert(0, path.name.format())
+        file_contents.delete("1.0", "end")
+        file_contents.insert("1.0", path.read())
 
 # Create main window
 window = tk.Tk()
@@ -32,7 +34,7 @@ content.pack(expand="true", fill="both")
 text_frame = tk.Frame(content, padx="10", pady="10")
 text_frame.place(relwidth="0.5", relheight="1")
 
-file_contents = tk.Text(text_frame, undo="true")
+file_contents = tk.Text(text_frame, font=("Helvetica", 10))
 file_contents.place(relwidth="1", relheight="1")
 
 # Frame that contains the file dialog as well as the search options
@@ -44,5 +46,18 @@ file_button.pack(pady="20")
 
 file_entry = tk.Entry(options_frame, width="50")
 file_entry.pack()
+
+# Extra label to help make the UI clearer
+format_label = tk.Label(options_frame, text="-------------------------------------------------------")
+format_label.pack(pady="50")
+
+search_label = tk.Label(options_frame, text="Search For Text:")
+search_label.pack(pady="20")
+
+search_entry = tk.Entry(options_frame, width="20")
+search_entry.pack()
+
+match_case_checkbox = tk.Checkbutton(options_frame, text="Match Case?")
+match_case_checkbox.pack()
 
 window.mainloop()
