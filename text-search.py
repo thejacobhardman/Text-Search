@@ -32,16 +32,20 @@ def search_for_text():
     with open(file_entry.get(), "rt") as file_to_read:
         line_num = 1
         for line in file_to_read:
-            found_object = re.search(search_entry.get(), line)
-            if found_object:
-                size = found_object.span()[1] - found_object.span()[0]
-                print(str(line_num) + "." + str(found_object.span()[0]))
-                j = 0
-                while j < size:
-                    file_contents.tag_add("match", (str(line_num) + "." + str(found_object.span()[0] + j)))
-                    file_contents.tag_config("match", background="yellow")
-                    j += 1
-                num_of_matches += 1
+            #print(line)
+            for word in line.split():
+                #print(word)
+                found_object = re.search(search_entry.get(), word)
+                if found_object:
+                    size = found_object.span()[1] - found_object.span()[0]
+                    print(size)
+                    print(str(line_num) + "." + str(found_object.span()[0]))
+                    j = 0
+                    while j < size:
+                        file_contents.tag_add("match", (str(line_num) + "." + str(found_object.span()[0] + j)))
+                        file_contents.tag_config("match", background="yellow")
+                        j += 1
+                    num_of_matches += 1
             line_num += 1
         
         # line_num = 1
