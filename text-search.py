@@ -7,6 +7,7 @@ import tkinter as tk
 from tkinter import filedialog
 from tkinter import *
 import sys, ctypes
+import re
 
 # This code fixes the blurry text that tkinter has when being used on Windows. I got this solution from Stack Overflow:
 # https://stackoverflow.com/questions/36514158/tkinter-output-blurry-for-icon-and-text-python-2-7/43033405
@@ -31,23 +32,37 @@ def search_for_text():
     with open(file_entry.get(), "rt") as file_to_read:
         line_num = 1
         for line in file_to_read:
-            letter_num = 0
-            for letter in line:
-                if len(search_entry.get()) > 1:
-                    print("need to fix...")
-                else:
-                    if match_case.get() == 0:
-                        if letter.upper() in search_entry.get().upper():
-                            file_contents.tag_add("match", (str(line_num) + "." + str(letter_num)))
-                            file_contents.tag_config("match", background="yellow")
-                            num_of_matches += 1
-                    else:
-                        if letter in search_entry.get():
-                            file_contents.tag_add("match", (str(line_num) + "." + str(letter_num)))
-                            file_contents.tag_config("match", background="yellow")
-                            num_of_matches += 1
-                letter_num += 1
+            found_object = re.search(search_entry.get(), line)
+            if found_object:
+                size = found_object.span()[1] - found_object.span()[0]
+                print(str(line_num) + "." + str(found_object.span()[0]))
+                j = 0
+                while j < size:
+                    file_contents.tag_add("match", (str(line_num) + "." + str(found_object.span()[0] + j)))
+                    file_contents.tag_config("match", background="yellow")
+                    j += 1
+                num_of_matches += 1
             line_num += 1
+        
+        # line_num = 1
+        # for line in file_to_read:
+        #     letter_num = 0
+        #     for letter in line:
+        #         if len(search_entry.get()) > 1: # TODO please fix me
+        #             print("please fix")
+        #         else:
+        #             if match_case.get() == 0:
+        #                 if letter.upper() in search_entry.get().upper():
+        #                     file_contents.tag_add("match", (str(line_num) + "." + str(letter_num)))
+        #                     file_contents.tag_config("match", background="yellow")
+        #                     num_of_matches += 1
+        #             else:
+        #                 if letter in search_entry.get():
+        #                     file_contents.tag_add("match", (str(line_num) + "." + str(letter_num)))
+        #                     file_contents.tag_config("match", background="yellow")
+        #                     num_of_matches += 1
+        #         letter_num += 1
+        #     line_num += 1
         matches_found_label.config(text=("Matches found: " + str(num_of_matches)))
 
 # Create main window
