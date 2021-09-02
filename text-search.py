@@ -6,7 +6,6 @@
 import tkinter as tk
 from tkinter import filedialog
 import sys, ctypes
-from tkinter import font
 
 # This code fixes the blurry text that tkinter has when being used on Windows. I got this solution from Stack Overflow:
 # https://stackoverflow.com/questions/36514158/tkinter-output-blurry-for-icon-and-text-python-2-7/43033405
@@ -26,6 +25,19 @@ def open_file_dialog():
 
 def search_for_text():
     print("Searching...")
+    file_contents.tag_delete("match")
+    with open(file_entry.get(), "rt") as file_to_read:
+        line_num = 1
+        for line in file_to_read:
+            letter_num = 0
+            for letter in line:
+                print(str(line_num) + "." + str(letter_num))
+                if letter in search_entry.get():
+                    file_contents.tag_add("match", (str(line_num) + "." + str(letter_num)))
+                    file_contents.tag_config("match", background="yellow")
+                    print("FOUND")
+                letter_num += 1
+            line_num += 1
 
 # Create main window
 window = tk.Tk()
@@ -72,4 +84,5 @@ format_label_two.pack(pady="50")
 matches_found_label = tk.Label(options_frame, text=("Matches found: " + str(num_of_matches)))
 matches_found_label.pack(pady="20")
 
+# Run the program
 window.mainloop()
