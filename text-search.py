@@ -1,6 +1,6 @@
 # Jacob Hardman
 # CS 350
-# Professor
+# Professor Christopher Harris
 # 9/1/2021
 
 import tkinter as tk
