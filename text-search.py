@@ -32,7 +32,10 @@ def search_for_text():
     with open(file_entry.get(), "rt") as file_to_read:
         line_num = 1
         for line in file_to_read:
-            found_object = re.search(search_entry.get(), line)
+            if match_case.get() == 0:
+                found_object = re.search(search_entry.get(), line, re.IGNORECASE)
+            else:
+                found_object = re.search(search_entry.get(), line)
             if found_object:
                 size = found_object.span()[1] - found_object.span()[0]
                 print(str(line_num) + "." + str(found_object.span()[0]))
