@@ -14,6 +14,8 @@ if __name__ == "__main__":
     if 'win' in sys.platform:
         ctypes.windll.shcore.SetProcessDpiAwareness(1)
 
+num_of_matches = 0
+
 def open_file_dialog():
     path = filedialog.askopenfile(initialdir="/documents", title="Select File", filetypes=(("txt files", "*.txt"),("all files", "*.*")))
     if path:
@@ -21,6 +23,9 @@ def open_file_dialog():
         file_entry.insert(0, path.name.format())
         file_contents.delete("1.0", "end")
         file_contents.insert("1.0", path.read())
+
+def search_for_text():
+    print("Searching...")
 
 # Create main window
 window = tk.Tk()
@@ -48,16 +53,23 @@ file_entry = tk.Entry(options_frame, width="50")
 file_entry.pack()
 
 # Extra label to help make the UI clearer
-format_label = tk.Label(options_frame, text="-------------------------------------------------------")
-format_label.pack(pady="50")
+format_label_one = tk.Label(options_frame, text="-------------------------------------------------------")
+format_label_one.pack(pady="50")
 
-search_label = tk.Label(options_frame, text="Search For Text:")
-search_label.pack(pady="20")
+search_button = tk.Button(options_frame, text="Search", command=search_for_text)
+search_button.pack(pady="20")
 
 search_entry = tk.Entry(options_frame, width="20")
 search_entry.pack()
 
 match_case_checkbox = tk.Checkbutton(options_frame, text="Match Case?")
 match_case_checkbox.pack()
+
+# Extra label to help make the UI clearer
+format_label_two = tk.Label(options_frame, text="-------------------------------------------------------")
+format_label_two.pack(pady="50")
+
+matches_found_label = tk.Label(options_frame, text=("Matches found: " + str(num_of_matches)))
+matches_found_label.pack(pady="20")
 
 window.mainloop()
