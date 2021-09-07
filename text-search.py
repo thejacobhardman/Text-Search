@@ -39,11 +39,11 @@ def search_for_text():
             if found_object:
                 size = found_object.span()[1] - found_object.span()[0]
                 print(str(line_num) + "." + str(found_object.span()[0]))
-                j = 0
-                while j < size:
-                    file_contents.tag_add("match", (str(line_num) + "." + str(found_object.span()[0] + j)))
+                i = 0
+                while i < size:
+                    file_contents.tag_add("match", (str(line_num) + "." + str(found_object.span()[0] + i)))
                     file_contents.tag_config("match", background="yellow")
-                    j += 1
+                    i += 1
                 num_of_matches += 1
             line_num += 1
         matches_found_label.config(text=("Matches found: " + str(num_of_matches)))
