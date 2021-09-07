@@ -85,7 +85,7 @@ file_entry.pack()
 
 # Extra label to help make the UI clearer
 format_label_one = tk.Label(options_frame, text="-------------------------------------------------------")
-format_label_one.pack(pady="50")
+format_label_one.pack(pady="30")
 
 search_entry = tk.Entry(options_frame, width="20")
 
@@ -106,10 +106,10 @@ color_picker.pack()
 
 # Extra label to help make the UI clearer
 format_label_two = tk.Label(options_frame, text="-------------------------------------------------------")
-format_label_two.pack(pady="50")
+format_label_two.pack(pady="30")
 
 matches_found_label = tk.Label(options_frame, text=("Matches found: " + str(num_of_matches)))
-matches_found_label.pack(pady="20")
+matches_found_label.pack()
 
 # Run the program
 window.mainloop()
