@@ -55,29 +55,6 @@ def search(text_widget, keyword, tag):
         num_of_matches += 1
     matches_found_label.config(text=("Matches found: " + str(num_of_matches)))
 
-# def search_for_text():
-#     global num_of_matches
-#     num_of_matches = 0
-#     file_contents.tag_delete("match")
-#     with open(file_entry.get(), "rt") as file_to_read:
-#         line_num = 1
-#         for line in file_to_read:
-#             if match_case.get() == 0:
-#                 found_object = re.search(search_entry.get(), line, re.IGNORECASE)
-#             else:
-#                 found_object = re.search(search_entry.get(), line)
-#             if found_object:
-#                 size = found_object.span()[1] - found_object.span()[0]
-#                 print(str(line_num) + "." + str(found_object.span()[0]))
-#                 i = 0
-#                 while i < size:
-#                     file_contents.tag_add("match", (str(line_num) + "." + str(found_object.span()[0] + i)))
-#                     file_contents.tag_config("match", background="yellow")
-#                     i += 1
-#                 num_of_matches += 1
-#             line_num += 1
-#         matches_found_label.config(text=("Matches found: " + str(num_of_matches)))
-
 # Create main window
 window = tk.Tk()
 window.title("Text Search")
