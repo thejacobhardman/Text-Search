@@ -46,26 +46,6 @@ def search_for_text():
                     j += 1
                 num_of_matches += 1
             line_num += 1
-        
-        # line_num = 1
-        # for line in file_to_read:
-        #     letter_num = 0
-        #     for letter in line:
-        #         if len(search_entry.get()) > 1: # TODO please fix me
-        #             print("please fix")
-        #         else:
-        #             if match_case.get() == 0:
-        #                 if letter.upper() in search_entry.get().upper():
-        #                     file_contents.tag_add("match", (str(line_num) + "." + str(letter_num)))
-        #                     file_contents.tag_config("match", background="yellow")
-        #                     num_of_matches += 1
-        #             else:
-        #                 if letter in search_entry.get():
-        #                     file_contents.tag_add("match", (str(line_num) + "." + str(letter_num)))
-        #                     file_contents.tag_config("match", background="yellow")
-        #                     num_of_matches += 1
-        #         letter_num += 1
-        #     line_num += 1
         matches_found_label.config(text=("Matches found: " + str(num_of_matches)))
 
 # Create main window
