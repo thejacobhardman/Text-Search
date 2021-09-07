@@ -16,6 +16,7 @@ if __name__ == "__main__":
         ctypes.windll.shcore.SetProcessDpiAwareness(1)
 
 num_of_matches = 0
+background_colors = ["Yellow", "Red", "Blue", "Orange", "Green", "Purple"]
 
 def open_file_dialog():
     path = filedialog.askopenfile(initialdir="/documents", title="Select File", filetypes=(("txt files", "*.txt"),("all files", "*.*")))
@@ -25,10 +26,15 @@ def open_file_dialog():
         file_contents.delete("1.0", "end")
         file_contents.insert("1.0", path.read())
 
+def change_highlight_color(selection):
+    highlight_color = selection
+    color_picker.config(bg=highlight_color)
+    file_contents.tag_config("match", background=highlight_color)
+
 # Had to add this method to trigger the search otherwise tkinter threw a fit and would not load the window.
 def trigger_search():
     file_contents.tag_delete("match")
-    file_contents.tag_config("match", background="yellow")
+    file_contents.tag_config("match", background=highlight_color.get())
     search(file_contents, search_entry.get(), "match")
 
 # I was completely stuck on how to correctly filter and highlight the text using tkinter so I found and incorporated this solution:
@@ -77,6 +83,8 @@ window = tk.Tk()
 window.title("Text Search")
 
 match_case = IntVar()
+highlight_color = StringVar()
+highlight_color.set(background_colors[0])
 
 # Master frame to hold two sub frames
 content = tk.Frame(window, height="600", width="800")
@@ -112,6 +120,13 @@ search_entry.pack()
 
 match_case_checkbox = tk.Checkbutton(options_frame, text="Match Case?", variable=match_case)
 match_case_checkbox.pack()
+
+color_label = tk.Label(options_frame, text="Highlight Color:")
+color_label.pack(pady="10")
+
+color_picker = tk.OptionMenu(options_frame, highlight_color, *background_colors, command=change_highlight_color)
+color_picker.config(bg=highlight_color.get(), width="10", height="2")
+color_picker.pack()
 
 # Extra label to help make the UI clearer
 format_label_two = tk.Label(options_frame, text="-------------------------------------------------------")
