@@ -7,7 +7,6 @@ import tkinter as tk
 from tkinter import filedialog
 from tkinter import *
 import sys, ctypes
-import re
 
 # This code fixes the blurry text that tkinter has when being used on Windows. I got this solution from Stack Overflow:
 # https://stackoverflow.com/questions/36514158/tkinter-output-blurry-for-icon-and-text-python-2-7/43033405
